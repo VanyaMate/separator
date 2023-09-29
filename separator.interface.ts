@@ -9,6 +9,15 @@ export type AdditionalSeparatorOption<R> =
         start: number
     };
 
+export type SortSeparatorOption<T> =
+    SeparatorOption
+    & {
+        temp: T[],
+        max: T,
+        sorted: number,
+        checked: number,
+    }
+
 export interface ISeparator {
     map<T, R> (array: T[], mapCallback: (T) => R, options: SeparatorOption): Promise<R[]>;
 
