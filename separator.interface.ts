@@ -19,11 +19,11 @@ export type SortSeparatorOption<T> =
 }
 
 export interface ISeparator {
-    findFirst<T> (array: T[], searchCallback: (T) => boolean, options: SeparatorOption): Promise<T>;
+    findFirst<T> (array: T[], searchCallback: (item: T) => boolean, options: SeparatorOption): Promise<T>;
 
-    map<T, R> (array: T[], mapCallback: (T) => R, options: SeparatorOption): Promise<R[]>;
+    map<T, R> (array: T[], mapCallback: (item: T) => R, options: SeparatorOption): Promise<R[]>;
 
-    filter<T> (array: T[], filterCallback: (T) => boolean, options: SeparatorOption): Promise<T[]>;
+    filter<T> (array: T[], filterCallback: (item: T) => boolean, options: SeparatorOption): Promise<T[]>;
 
     sort<T> (array: T[], sortParam: [ keyof T, 'asc' | 'desc' ], options: SeparatorOption): Promise<T[]>;
 }
