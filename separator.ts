@@ -6,6 +6,14 @@ import {
 
 
 export class Separator implements ISeparator {
+    findFirst<T> (array: T[], searchCallback: (T) => boolean, options: SeparatorOption): Promise<T> {
+        return this._recallFindFirst(array, searchCallback, {
+            maxOperationsPerStep: options.maxOperationsPerStep,
+            start               : 0,
+            temp                : [],
+        });
+    }
+
     map<T, R> (array: T[], mapCallback: (T) => R, options: SeparatorOption): Promise<R[]> {
         return this._recallMap<T, R>(array, mapCallback, {
             maxOperationsPerStep: options.maxOperationsPerStep,
@@ -51,6 +59,31 @@ export class Separator implements ISeparator {
                     }));
                 } else {
                     resolve(options.temp);
+                }
+            }, 0);
+        });
+    }
+
+    private _recallFindFirst<T> (array: T[], searchCallback: (T) => boolean, options: AdditionalSeparatorOption<T>): Promise<T> {
+        return new Promise<T>((resolve, reject) => {
+            setTimeout(() => {
+                const remainingOperations: number = array.length - options.start;
+                const stepOperations: number      = remainingOperations >= options.maxOperationsPerStep
+                                                    ? options.maxOperationsPerStep
+                                                    : remainingOperations;
+                const start: number               = options.start;
+                const finish: number              = start + stepOperations;
+                const newStart: number            = options.start + stepOperations;
+                for (let i: number = start; i < finish; i++) {
+                    const item: T = array[i];
+                    searchCallback(item) && resolve(item);
+                }
+                if (newStart !== array.length) {
+                    resolve(this._recallFindFirst(array, searchCallback, {
+                        ...options, start: newStart,
+                    }));
+                } else {
+                    reject(null);
                 }
             }, 0);
         });
