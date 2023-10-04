@@ -64,8 +64,8 @@ export class Separator implements ISeparator {
         });
     }
 
-    private _recallFindFirst<T> (array: T[], searchCallback: (T) => boolean, options: AdditionalSeparatorOption<T>): Promise<T> {
-        return new Promise<T>((resolve, reject) => {
+    private _recallFindFirst<T> (array: T[], searchCallback: (T) => boolean, options: AdditionalSeparatorOption<T>): Promise<T | null> {
+        return new Promise<T | null>((resolve) => {
             setTimeout(() => {
                 const remainingOperations: number = array.length - options.start;
                 const stepOperations: number      = remainingOperations >= options.maxOperationsPerStep
@@ -83,7 +83,7 @@ export class Separator implements ISeparator {
                         ...options, start: newStart,
                     }));
                 } else {
-                    reject(null);
+                    resolve(null);
                 }
             }, 0);
         });
