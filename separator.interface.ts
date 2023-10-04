@@ -19,7 +19,7 @@ export type SortSeparatorOption<T> =
 }
 
 export interface ISeparator {
-    findFirst<T> (array: T[], searchCallback: (item: T) => boolean, options: SeparatorOption): Promise<T>;
+    findFirst<T> (array: T[], searchCallback: (item: T) => boolean, options: SeparatorOption): Promise<T | null>;
 
     map<T, R> (array: T[], mapCallback: (item: T) => R, options: SeparatorOption): Promise<R[]>;
 
