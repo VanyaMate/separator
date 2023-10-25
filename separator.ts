@@ -6,8 +6,8 @@ import {
 
 
 export class Separator implements ISeparator {
-    findFirst<T> (array: T[], searchCallback: (item: T) => boolean, options: SeparatorOption): Promise<T> {
-        return this._recallFindFirst(array, searchCallback, {
+    findFirst<T> (array: T[], searchCallback: (item: T) => boolean, options: SeparatorOption): Promise<T | null> {
+        return this._recallFindFirst<T>(array, searchCallback, {
             maxOperationsPerStep: options.maxOperationsPerStep,
             start               : 0,
             temp                : [],

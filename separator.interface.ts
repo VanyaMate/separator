@@ -13,7 +13,7 @@ export type SortSeparatorOption<T> =
     SeparatorOption
     & {
     temp: T[],
-    max: T,
+    max: T | null,
     sorted: number,
     checked: number,
 }
