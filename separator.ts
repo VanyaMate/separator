@@ -6,7 +6,7 @@ import {
 
 
 export class Separator implements ISeparator {
-    findFirst<T> (array: T[], searchCallback: (T) => boolean, options: SeparatorOption): Promise<T> {
+    findFirst<T> (array: T[], searchCallback: (item: T) => boolean, options: SeparatorOption): Promise<T> {
         return this._recallFindFirst(array, searchCallback, {
             maxOperationsPerStep: options.maxOperationsPerStep,
             start               : 0,
@@ -14,7 +14,7 @@ export class Separator implements ISeparator {
         });
     }
 
-    map<T, R> (array: T[], mapCallback: (T) => R, options: SeparatorOption): Promise<R[]> {
+    map<T, R> (array: T[], mapCallback: (item: T) => R, options: SeparatorOption): Promise<R[]> {
         return this._recallMap<T, R>(array, mapCallback, {
             maxOperationsPerStep: options.maxOperationsPerStep,
             temp                : [],
@@ -22,7 +22,7 @@ export class Separator implements ISeparator {
         });
     }
 
-    filter<T> (array: T[], filterCallback: (T) => boolean, options: SeparatorOption): Promise<T[]> {
+    filter<T> (array: T[], filterCallback: (item: T) => boolean, options: SeparatorOption): Promise<T[]> {
         return this._recallFilter<T>(array, filterCallback, {
             maxOperationsPerStep: options.maxOperationsPerStep,
             temp                : [],
@@ -40,7 +40,7 @@ export class Separator implements ISeparator {
         });
     }
 
-    private _recallMap<T, R> (array: T[], mapCallback: (T) => R, options: AdditionalSeparatorOption<R>): Promise<R[]> {
+    private _recallMap<T, R> (array: T[], mapCallback: (item: T) => R, options: AdditionalSeparatorOption<R>): Promise<R[]> {
         return new Promise<R[]>((resolve) => {
             setTimeout(() => {
                 const remainingOperations: number = array.length - options.start;
@@ -64,7 +64,7 @@ export class Separator implements ISeparator {
         });
     }
 
-    private _recallFindFirst<T> (array: T[], searchCallback: (T) => boolean, options: AdditionalSeparatorOption<T>): Promise<T | null> {
+    private _recallFindFirst<T> (array: T[], searchCallback: (item: T) => boolean, options: AdditionalSeparatorOption<T>): Promise<T | null> {
         return new Promise<T | null>((resolve) => {
             setTimeout(() => {
                 const remainingOperations: number = array.length - options.start;
@@ -89,7 +89,7 @@ export class Separator implements ISeparator {
         });
     }
 
-    private _recallFilter<T> (array: T[], filterCallback: (T) => boolean, options: AdditionalSeparatorOption<T>): Promise<T[]> {
+    private _recallFilter<T> (array: T[], filterCallback: (item: T) => boolean, options: AdditionalSeparatorOption<T>): Promise<T[]> {
         return new Promise<T[]>((resolve) => {
             setTimeout(() => {
                 const remainingOperations: number = array.length - options.start;
@@ -128,11 +128,3 @@ export class Separator implements ISeparator {
         });
     }
 }
-
-const separator = new Separator();
-
-separator
-    .map<number, string>(new Array(1000200).fill(0), (number: number) => number.toString(), {
-        maxOperationsPerStep: 10000,
-    })
-    .then((data) => console.log(data.length));

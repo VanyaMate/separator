@@ -1,4 +1,2 @@
-import { Separator } from './separator';
-
-
-export default Separator;
+export * from './separator';
+export type * from './separator.interface';
