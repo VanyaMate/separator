@@ -1,2 +1,2 @@
-export * from './separator';
-export type * from './separator.interface';
+export * from './separator/Separator';
+export type * from './separator/Separator.interface';
