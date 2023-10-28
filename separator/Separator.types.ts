@@ -40,4 +40,4 @@ export type SeparatorBatchHandler<ItemType> = (response: SeparatorBatchResponse<
  * Первый элемент - index
  * Второй элемент - сам элемент
  */
-export type SeparatorSingleItem<ItemType> = [ number, ItemType ];
+export type SeparatorSingleItem<ItemType> = [ number, ItemType | null ];

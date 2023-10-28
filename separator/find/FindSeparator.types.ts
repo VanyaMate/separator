@@ -19,3 +19,11 @@ export type FindSeparatorFilter<ItemType> =
 
 export type FindMostItemFilter<ItemType> =
     ((prev: ItemType, current: ItemType) => ItemType) | keyof ItemType;
+
+export type FindStepOneResponse<ItemType> = AsyncGenerator<FindStepOneItem<ItemType>>
+
+export type FindStepOneItem<ItemType> = {
+    finish: boolean;
+    item: ItemType | null;
+    index: number;
+};

@@ -15,3 +15,14 @@ export default class Separator implements ISeparator {
     public sort: ISortSeparator     = new SortSeparator();
     public update: IUpdateSeparator = new UpdateSeparator();
 }
+
+const separator: ISeparator = new Separator();
+
+separator.find
+    .first(
+        [ 1, 2, 3, 10, 10, 32, 0, -1, 55 ],
+        (item) => item > 10,
+        { skip: 1, maxOperations: 1 },
+        console.log,
+    )
+    .then((result) => console.log('Index: ', result[0], 'item: ', result[1]));
