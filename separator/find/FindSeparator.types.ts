@@ -15,7 +15,9 @@ export type FindOneSeparatorOptions = {
  * 2. Объект содержащий какие-то поля из объекта
  */
 export type FindSeparatorFilter<ItemType> =
-    ((item: ItemType) => boolean) | Partial<ItemType>;
+    FindSeparatorFilterFunction<ItemType> | FindSeparatorFilterObject<ItemType>;
+export type FindSeparatorFilterFunction<ItemType> = (item: ItemType) => boolean;
+export type FindSeparatorFilterObject<ItemType> = Partial<ItemType>;
 
 export type FindMostItemFilter<ItemType> =
     ((prev: ItemType, current: ItemType) => ItemType) | keyof ItemType;
